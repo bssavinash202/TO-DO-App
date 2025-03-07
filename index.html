@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do APP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>TO-DO App</h1>
+    <div class="container">
+        <div class="container2">
+            <div class="ipts">
+                <div class="task">
+                   Task: <input type="text" id="task">
+                </div>
+                <div class="date">
+                   Time: <input type="time" id="time">
+                </div>
+            </div>
+            <div class="btns">
+                <button onclick="Add()" class="add"id="add">Add Task</button>
+                <button id="editBtn" class="add">Edit</button>
+                <button onclick="clearAll()" class="clear">Clear All</button>
+            </div>
+            <table id="display" border="2px" style="text-align: center; width: 400px; margin-left: 100px;">
+                  
+            </table>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
