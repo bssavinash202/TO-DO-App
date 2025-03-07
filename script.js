@@ -1,26 +1,46 @@
 let list =[
-    {task:'hkbasck',time:'08:09'},
-    {task:'avinash',time:'16:09'},
-    {task:'jn',time:'09:09'},
+    {task:'Morning Break Fast',time:'08:00',status:false},
+    {task:'java Class',time:'09:00',status:false},
+    {task:'Practice Session',time:'10:30',status:false},
 
 ];
+document.getElementById('editBtn').style.display='none'
+let filterr = "all";
+const setFilter = (f) => {
+    filterr = f;
+    display();
+};
 const display=()=>{
+    if (filterr === "completed") {
+        filteredList = list.filter((task) => {
+            return task.status
+        }); console.log(filteredList)
+    } else if (filterr === "pending") {
+        filteredList = list.filter((task) => {
+           return !task.status
+        }); console.log(filteredList)
+    } else {
+        filteredList = list; // Show all tasks
+    }
+   
     let total;
     let value = ""
-    let id =0
-    if(list.length==0){
+   
+    if(filteredList.length===0){
         // value = 'list is empty'
-        total=`<h1>List is empty</h1>`
+        total=`<tr>List is empty</tr>`
         document.getElementById('display').innerHTML=total
     }else{
-     value = list.reduce((acc,val,ind)=>{ 
+     value = filteredList.reduce((acc,val,ind)=>{ 
+        let rowColor = (ind%2==0)?'background-color: black':"background-color:green"
             let tr = `
-             <tr>
-                <td>${++id}</td>
+             <tr class="tr">
+                <td>${ind+1}</td>
                 <td>${val.task}</td>
                 <td>${val.time}</td>
-                <td><button onclick="deleteItem(${ind})">delete</button></td>
-                <td><button onclick="editItem(${ind})">edit</button></td>
+                 <td><input type="checkbox" id='check' ${val.status ? "checked" : ""} onclick="toggleCheck(${ind})"></td>
+                <td><button onclick="deleteItem(${ind})" class="text-danger"><i class="fa-solid fa-trash"></i><span> Delete</span></button></td>
+                <td><button onclick="editItem(${ind})" class="text-primary"><i class="fa-solid fa-pen-to-square"></i><span> Edit</span></button></td>
              </tr> 
             `
             acc+=tr
@@ -31,6 +51,7 @@ const display=()=>{
             <th>No</th>
             <th>Task</th>
             <th>Time</th>
+            <th>Status</th>
             <th colspan="2">Action</th>
         </tr>
     ${value}
@@ -79,31 +100,36 @@ const editItem=(id)=>{
             return val
         }
    })
+   console.log(task)
    if(task){
     taskEle.value=task.task
     timeEle.value = task.time
    }
-   let Edit= document.getElementById('editBtn').addEventListener('click',()=>{
-        edit(id)
-   })
+   document.getElementById('editBtn').onclick=(()=>edit(id))
 }
 const edit = (id)=>{
-    
     let taskV = document.getElementById('task').value
    let timeV = document.getElementById('time').value
-   console.log(taskV,timeV)
     let task = list.find((val,ind)=>{
         if(ind==id){
-            return ind
+            return val
         }
     })
+   
     if(task){
         task.task=taskV
         task.time=timeV
+        console.log(task.task,task.time)
     }
     display()
-    alert("Updated Successfully")
+    
     clearInputs()
-    document.getElementById('add').style.display='block'
-   
+    alert("Updated Successfully")
+    document.getElementById('add').style.display='block'  
 }
+const toggleCheck = (index) => {
+    console.log(index)
+    console.log(list[index].status)
+    list[index].status = !list[index].status;
+    display();
+};
