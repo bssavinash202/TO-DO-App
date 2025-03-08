@@ -72,6 +72,7 @@ td>button{
     border: none;
 }
 
+
 @media (max-width: 576px) {
     .ipts {
         flex-direction: column;
